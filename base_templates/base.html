@@ -12,132 +12,83 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/recipes_style.css' %}">
 
 </head>
 <body id="topo">
 
+    <!-- nav -->    
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="sideNav">
-        {% comment %} {% if request.user.is_authenticated %}   {% endcomment %}
-        <a class="navbar-brand" href="#">
-            <span class="d-none d-lg-block my-5">
-                <h3>Seja bem vindo</h3>
-                <p>Guilherme</p>
-            </span>
-        </a>
-      {% comment %} {% else %} {% endcomment %}
-        <p>Você não está logado</p>
-      {% comment %} {% endif %} {% endcomment %}
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir ou fechar menu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav">
-         <li class="nav-item">
-            <a class="nav-item nav-link" href="#receitas-salgadas">Receitas salgadas</a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-item nav-link" href="#receitas-doces">Receitas doces</a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-item nav-link" href="#bebidas">Bebidas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="#">Cadastre-se</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="#">Entrar</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="#">Sair</a>
-          </li>
-         <li class="nav-item">
-             <a class="nav-item nav-link" href="#contato">Entre em Contato</a>
-         </li>
-        </ul>
-      </div>
+        {% if request.user.is_authenticated %}
+            <a class="navbar-brand" href="#">
+                <span class="d-none d-lg-block my-5">
+                    <h3>Seja bem vindo</h3>
+                    <p>Guilherme</p>
+                </span>
+            </a>
+        {% else %}
+            <p>Você não está logado</p>
+        {% endif %} 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Abrir ou fechar menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#receitas-salgadas">Receitas salgadas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#receitas-doces">Receitas doces</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#bebidas">Bebidas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#">Cadastre-se</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#">Entrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#">Sair</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="#contato">Entre em Contato</a>
+                </li>
+            </ul>
+        </div>
     </nav>
+    <!-- /nav --> 
     
+    
+    <!-- header -->    
     <div class="container-fluid">
         <section class="section py-3" id="home">
-            <h2>Aprenda como fazer</h2>
-			<div>
-				Receitas para você fazer e se deliciar com as receitas mais saborosas da internet, entre elas, salgadas, doces e de bebidas.
-				Aqui você irá encontrar diversas receitas que você precisa. As receitas mais simples e gostosas da internet estão aqui!
-			</div>
-			<div>
-				As melhores seleções de receitas da internet. <b>Pare de procurar</b>, aqui você encontra a receita que precisa!
-			</div>
+                <h2>Aprenda como fazer</h2>
+                <div>
+                    Receitas para você fazer e se deliciar com as receitas mais saborosas da internet, entre elas, salgadas, doces e de bebidas.
+                    Aqui você irá encontrar diversas receitas que você precisa. As receitas mais simples e gostosas da internet estão aqui!
+                </div>
+                <div>
+                    As melhores seleções de receitas da internet. <b>Pare de procurar</b>, aqui você encontra a receita que precisa!
+                </div>
 
-            <form action="#" method='GET'>
-				<div class='container my-2'>
-					<div class='row'>
-						<input type="search" name='name' class='container-fluid p1 border col-8' autocomplete='off' placeholder='Busacar receitas'>
-						<button type='subimit' class='btn btn-outline-dark col-2'> Pesquisar </button>
-						<a class='btn btn-outline-danger  col-2' href="#">Cancelar</a>		
-					</div>
-				</div>
-			</form>
-
+                <form action="#" method='GET'>
+                    <div class='container my-2'>
+                        <div class='row'>
+                            <input type="search" name='name' class='container-fluid p1 border col-8' autocomplete='off' placeholder='Busacar receitas'>
+                            <button type='subimit' class='btn btn-outline-dark col-2'> Pesquisar </button>
+                            <a class='btn btn-outline-danger  col-2' href="#">Cancelar</a>		
+                        </div>
+                    </div>
+                </form>
+            <hr class="my-4">
         </section>
-        
-        <hr class="m-0">
-        
-        <section class="section" id="trabalhos-recentes">
-            <h2 class="my-3">Trabalhos Recentes</h2>
-            
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <div class="card">
-                        <a href="images/fulls/01.jpg">
-                            <img src="{% static 'images/thumbs/01.jpg' %}" alt="" class="card-img-top">
-                        </a>
-                        <p class="card-text">Magna sed consequat tempus</p>
-                        <p><small>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</small></p>
-                        
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="card">
-                        <a href="images/fulls/02.jpg">
-                            <img src="{% static 'images/thumbs/02.jpg'%} " alt="" class="card-img-top">
-                        </a>
-                        <p class="card-text">Magna sed consequat tempus</p>
-                        <p><small>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</small></p>
-                        
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="card">
-                        <a href="images/fulls/03.jpg">
-                            <img src="{% static 'images/thumbs/03.jpg' %}" alt="" class="card-img-top">
-                        </a>
-                        <p class="card-text">Tortor metus commodo</p>
-                        <p><small>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</small></p>
-                        
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="card">
-                        <a href="images/fulls/04.jpg">
-                            <img src="{% static 'images/thumbs/04.jpg' %}" alt="" class="card-img-top">
-                        </a>
-                        <p class="card-text">Quam neque phasellus</p>
-                        <p><small>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</small></p>
-                        
-                    </div>
-                </div>
-            </div> <!-- row -->
-            
-            <a href="#" class="btn btn-outline-dark btn-lg my-1" role="button">Full Portfolio</a>
-        </section> <!-- .trabalhos-recentes -->
-        
-        <hr class="m-0">
-        
-        
-    </div> <!-- /container-fluid -->
+    </div> <!-- header -->       
+
+    {% block content %}{% endblock  %}    
     
-    
+    <!-- /footer -->   
     <footer class="footer">
         <ul class="nav justify-content-center d-flex">
             <li class="nav-item"><a href="https://www.instagram.com/guirfsantos/" target='_blank' class="nav-link icon-link">
@@ -159,20 +110,7 @@
             <li> Guilherme dos Santos </li>
         </ul>
     </footer>
-
-         
-
-      
-
-
-
-
-
-      
-
-      
-	
-
+    <!-- /footer -->   
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
