@@ -1,0 +1,41 @@
+{% load static %}
+
+<section class="section" id="receitas-doces">
+    <div class='container'>
+    <h2 class="my-3">Receitas doces</h2>
+    <div class="row">
+        {% for recipe in recipes_list%}
+            {% if recipe.category.id == 2 %}
+                <div class="col-12 col-sm-6">
+                    <div class="card">
+                        <a href="#">
+                            <img src="{{ recipe.image }}" width='370px' height='270px' alt="" class="card-img-top">
+                        </a>
+                        <h5 class="card-text text-center">{{ recipe.title|upper }}</h5>
+                    </div>
+                    <div class='container mb-3'> 
+                        <div class='detail-title row'>
+                            <h5 class="card-header text-muted text-center border col-4">Tempo</h5>
+                            <h5 class="card-header text-muted text-center border col-4">Rendimento</h5>
+                            <h5 class="card-header text-muted text-center border col-4">Autor</h5>
+                        </div>
+                        <div class='row'>
+                            <div class="p-2 bg-light text-dark text-center border col-4">{{recipe.preparation_time}} minutos</div>
+                            {%if recipe.servings == 1%}
+                                <div class="p-2 bg-light text-dark text-center border col-4">{{recipe.servings}} porção</div>
+                            {% else %}
+                                <div class="p-2 bg-light text-dark text-center border col-4">{{recipe.servings}} porções</div>
+                            {% endif %}
+                            <div class="p-2 bg-light text-dark text-center border col-4">{{recipe.author|title}}</div>
+                        </div>
+                    </div>  
+                </div>
+            {% endif %} 
+        {% endfor %}
+    </div> 
+    
+    <a href="#" class="btn btn-outline-dark btn-lg my-3" role="button">Full Portfolio</a>
+</div> 
+</section> 
+
+<hr class="m-0">
