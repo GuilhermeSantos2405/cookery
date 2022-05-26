@@ -4,7 +4,7 @@
         <a class="navbar-brand" href="#">
             <span class="d-none d-lg-block my-5">
                 <h3>Seja bem vindo</h3>
-                <p>Guilherme</p>
+                <p>{{user|title}}</p>
             </span>
         </a>
     {% else %}
@@ -25,17 +25,38 @@
                 <a class="nav-item nav-link" href="#bebidas">Bebidas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link" href="#">Cadastre-se</a>
+                <a class="nav-item nav-link" href="{% url 'create_author' %}">Cadastre-se</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link" href="#">Entrar</a>
+                <a class="nav-item nav-link" href="{% url 'login' %}">Entrar</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link" href="#">Sair</a>
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Sair</a>
             </li>
             <li class="nav-item">
-                <a class="nav-item nav-link" href="#contato">Entre em Contato</a>
+                <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#ModalContato" >Contato</a>
             </li>
         </ul>
     </div>
+
+    
 </nav>
+
+ <!-- Modal contato -->
+ <div class="modal fade" id="ModalContato" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="TituloModalCentralizado">Contato</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p> <b>Nome:</b> Guilherme dos Santos</p>
+                <p> <b>Email:</b> guilherme_108@hotmail.com</p>
+                <p> <b>Telefone:</b> (11) 9 9767-4757</p>
+            </div>
+        </div>
+    </div>
+</div>
