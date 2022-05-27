@@ -30,3 +30,15 @@ class RecipeCreateView(CreateView):
         form.instance.author = self.request.user
         url = super().form_valid(form)
         return url
+
+
+class SearchListView(ListView):
+    template_name = 'pages/search.html'
+    context_object_name = 'recipes_list'
+    model = Recipe
+
+    def get_queryset(self):
+        search_term = self.request.GET.get('search_term')
+        qs = Recipe.objects.filter(
+            title__icontains=search_term, is_published=True)
+        return qs
