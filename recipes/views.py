@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
@@ -9,9 +10,40 @@ class IndexTemplateView(ListView):
     template_name = 'pages/index.html'
     context_object_name = 'recipes_list'
     model = Recipe
+    paginate_by = 8
 
     def get_queryset(self):
-        return Recipe.objects.filter(is_published=True)
+        return Recipe.objects.filter(is_published=True).order_by('?')
+
+
+class SaltyListView(ListView):
+    template_name = 'pages/salty.html'
+    context_object_name = 'recipes_list'
+    model = Recipe
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Recipe.objects.filter(is_published=True, category=1)
+
+
+class DessertListView(ListView):
+    template_name = 'pages/dessert.html'
+    context_object_name = 'recipes_list'
+    model = Recipe
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Recipe.objects.filter(is_published=True, category=2)
+
+
+class DrinksListView(ListView):
+    template_name = 'pages/drinks.html'
+    context_object_name = 'recipes_list'
+    model = Recipe
+    paginate_by = 6
+
+    def get_queryset(self):
+        return Recipe.objects.filter(is_published=True, category=3)
 
 
 class RecipeDetailView(DetailView):
@@ -20,7 +52,8 @@ class RecipeDetailView(DetailView):
     model = Recipe
 
 
-class RecipeCreateView(CreateView):
+class RecipeCreateView(LRM, CreateView):
+    login_url = reverse_lazy('login')
     model = Recipe
     template_name = 'pages/create_recipe.html'
     form_class = RecipeRegisterView

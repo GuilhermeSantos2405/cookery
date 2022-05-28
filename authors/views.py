@@ -17,6 +17,7 @@ class AuthorRecipesView(ListView):
     template_name = 'authors/templates/authors_recipes.html'
     context_object_name = 'authors_recipes'
     model = Recipe
+    paginate_by = 4
 
     def get_queryset(self):
         return Recipe.objects.filter(author=self.request.user)
