@@ -10,7 +10,9 @@
         <div class="card-body col-10 offset-1">
             <div class='detail-itens'>
             <h5 class="">{{recipe.title}}</h5>
-            <img src="{{recipe.image.url}}" height='400px' width='100%' alt="">
+            {%if recipe.image %}
+                <img src="{{recipe.image.url}}" height='400px' width='100%' alt="">
+            {% endif %}
             <div class='container mb-3'> 
                 <div class='detail-title row'>
                     <h5 class="card-header text text-center border col-4">Tempo</h5>

@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<section class="section" id="bebidas">
+<section class="section" id="#">
     <div class='container'>
     <h2 class="">Todas receitas</h2>
     <div class="row">
@@ -31,6 +31,10 @@
                             <div class="p-2 bg-light text-dark text-center border col-4">{{recipe.author|title}}</div>
                         </div>
                     </div>  
+                </div>
+                {% empty %}
+                <div class="center m-y">
+                    <h3 >Nenhuma receita encontrada</h3>
                 </div>
         {% endfor %}
     </div> 

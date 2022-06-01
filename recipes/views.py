@@ -1,3 +1,5 @@
+from unicodedata import category
+
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
@@ -23,7 +25,7 @@ class SaltyListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Recipe.objects.filter(is_published=True, category=1)
+        return Recipe.objects.filter(is_published=True, category_id=1)
 
 
 class DessertListView(ListView):
