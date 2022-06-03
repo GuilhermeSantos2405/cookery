@@ -8,44 +8,26 @@ from .forms import RecipeRegisterView
 from .models import Recipe
 
 
-class IndexTemplateView(ListView):
-    template_name = 'pages/index.html'
+class ListViewBase(ListView):
     context_object_name = 'recipes_list'
     model = Recipe
     paginate_by = 8
+
+
+class IndexTemplateView(ListViewBase):
+    template_name = 'pages/index.html'
 
     def get_queryset(self):
         return Recipe.objects.filter(is_published=True).order_by('?')
 
 
-class SaltyListView(ListView):
-    template_name = 'pages/salty.html'
-    context_object_name = 'recipes_list'
-    model = Recipe
-    paginate_by = 6
+class CategoryTemplateView(ListViewBase):
+    template_name = 'pages/category.html'
 
-    def get_queryset(self):
-        return Recipe.objects.filter(is_published=True, category_id=1)
-
-
-class DessertListView(ListView):
-    template_name = 'pages/dessert.html'
-    context_object_name = 'recipes_list'
-    model = Recipe
-    paginate_by = 6
-
-    def get_queryset(self):
-        return Recipe.objects.filter(is_published=True, category=2)
-
-
-class DrinksListView(ListView):
-    template_name = 'pages/drinks.html'
-    context_object_name = 'recipes_list'
-    model = Recipe
-    paginate_by = 6
-
-    def get_queryset(self):
-        return Recipe.objects.filter(is_published=True, category=3)
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(category__id=self.kwargs.get('category_id'))
+        return qs
 
 
 class RecipeDetailView(DetailView):
@@ -67,10 +49,8 @@ class RecipeCreateView(LRM, CreateView):
         return url
 
 
-class SearchListView(ListView):
+class SearchListView(ListViewBase):
     template_name = 'pages/search.html'
-    context_object_name = 'recipes_list'
-    model = Recipe
 
     def get_queryset(self):
         search_term = self.request.GET.get('search_term')

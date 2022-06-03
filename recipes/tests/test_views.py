@@ -78,3 +78,18 @@ class RecipeViewTest(TestBase):
         response = self.client.get(reverse('salty'))
         content = response.content.decode('utf-8')
         self.assertIn('id="receitas-salgadas"', content)
+
+    """ def test_recipe_author_template_load(self):
+        response = self.client.get(reverse('authors_recipes'))
+        content = response.content.decode('utf-8')
+        print(content)
+        assert 1 == 1 """
+    """ self.assertIn('id="receitas-salgadas"', content) """
+
+    def test_recipe_detail_template_load(self):
+        recipe = self.make_recipe()
+        response = self.client.get(
+            reverse('salty', kwargs={'pk': recipe.category.id}))
+        content = response.content.decode('utf-8')
+        print(content)
+        self.assertIn('recipe title test', content)
