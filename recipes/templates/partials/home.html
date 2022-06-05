@@ -7,9 +7,9 @@
         <div class="col-12 col-xl-6 my-2">
                     <div class='card'>
                         <a href="{% url 'detail' recipe.pk %}">
-                            
+                            {%if recipe.image%}
                             <img src="{{ recipe.image.url }}" width='370px' height='270px' alt="" class="card-img-top">
-                            
+                            {%endif%}
                         </a>    
                     </div>          
             <div class='container'> 

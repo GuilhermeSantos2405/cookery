@@ -1,6 +1,6 @@
 
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, ListView, TemplateView, UpdateView
+from django.views.generic import DeleteView, ListView, UpdateView
 from django.views.generic.edit import CreateView
 from recipes.models import Recipe
 
@@ -21,7 +21,8 @@ class AuthorRecipesView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
-        qs = qs.filter(author__id=self.kwargs.get('author_id'))
+        qs = qs.filter(author__id=self.kwargs.get(
+            'author_id'), is_published=True)
         return qs
 
 
@@ -33,7 +34,7 @@ class AuthorsDeleteView(DeleteView):
 
 class AuthorsUpdateView(UpdateView):
     model = Recipe
-    fields = ['title', 'preparation_time', 'servings', 'ingredients',
-              'method_preparation', 'image', 'category']
+    fields = ['title', 'preparation_time', 'servings', 'is_published',
+              'ingredients', 'method_preparation', 'image', 'category']
     template_name = 'authors/templates/update_recipe.html'
     success_url = reverse_lazy('index')

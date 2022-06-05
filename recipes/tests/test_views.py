@@ -1,92 +1,74 @@
 
-
-from unicodedata import category
-
-from django.test import TestCase
 from django.urls import reverse
-from recipes.models import Category, Recipe, User
+from parameterized import parameterized
+
+from .test_testbase import TestBase
 
 
-class TestBase(TestCase):
-    def setUp(self) -> None:
-        return super().setUp()
+class Recipe(TestBase):
 
-    def make_category(self):
-        return Category.objects.create(name='category')
-
-    def make_author(self):
-        return User.objects.create(
-            first_name='user',
-            last_name='name',
-            username='username',
-            password='123456',
-            email='username@email.com'
-        )
-
-    def make_recipe(self, is_published=True):
-        return Recipe.objects.create(
-            title='recipe title test',
-            category=self.make_category(),
-            author=self.make_author(),
-            preparation_time=1,
-            servings=1,
-            ingredients='ingredients tests',
-            method_preparation='method_preparation test',
-            is_published=is_published,
-        )
-
-
-class RecipeViewTest(TestBase):
-
-    def test_home_view_status_200_ok(self):
-        response = self.client.get(reverse('index_copy'))
+    def test_recipe_index_view_returns_status_code_200_OK(self):
+        response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
 
-    def test_index_view_load_recipe(self):
-        recipe = self.make_recipe()
+    def test_recipe_index_template_loads_recipes(self):
+        # Need a recipe for this test
+        self.make_recipe()
         response = self.client.get(reverse('index'))
-        response_recipes = response.context['recipes_list']
-        content = response.content.decode('utf-8')
-        print(content)
-        assert 1 == 1
-        """ self.assertEqual(response_recipes.first().title,
-                         'recipe title test') """
+        response_context_recipes = response.context['recipes_list'].first(
+        ).title
+        # Check if one recipe exists
+        self.assertEqual('Recipe Title', response_context_recipes)
 
-
-"""     
-        recipe = self.make_recipe()  # Criando a receita
-        response = self.client.get(reverse('index'))  # Executando a view
-        # Pegando a queryset (conjunto de lista)
-        response_recipes = response.context['recipes_list']
-        # Testando se o titulo da receita criada apareceu na tela
-        self.assertEqual(response_recipes.first().title,
-                         'recipe title test')
-
-    def test_recipe_home_template_dont_load_recipes_not_publishe(self):
-        recipe = self.make_recipe(is_published=True)
+    def test_recipe_index_template_do_not_loads_recipes(self):
         response = self.client.get(reverse('index'))
-        response_recipes = response.context['recipes_list']
-        self.assertEqual(response_recipes.first().title,
-                         'recipe title test')
-
-    def test_recipe_detail_template_load(self):
-        recipe = self.make_recipe()
-        response = self.client.get(reverse('detail', kwargs={'pk': 3}))
         content = response.content.decode('utf-8')
-        self.assertIn('recipe title test', content)
- """
+        self.assertIn('Nenhuma receita encontrada', content)
 
-""" def test_recipe_author_template_load(self):
-        response = self.client.get(reverse('authors_recipes'))
+    def test_recipe_index_template_dont_load_recipes_not_published(self):
+        self.make_recipe(is_published=False)
+        response = self.client.get(reverse('index'))
         content = response.content.decode('utf-8')
-        print(content)
-        assert 1 == 1 """
-""" self.assertIn('id="receitas-salgadas"', content) """
+        self.assertIn('Nenhuma receita encontrada', content)
 
-""" def test_recipe_detail_template_load(self):
+    def test_recipe_index_template_load_recipes_is_published(self):
+        self.make_recipe(is_published=True)
+        response = self.client.get(reverse('index'))
+        response_context_recipes = response.context['recipes_list'].first(
+        ).title
+        self.assertEqual('Recipe Title', response_context_recipes)
+
+    def test_category_view_template_load_recipes(self):
         recipe = self.make_recipe()
         response = self.client.get(
-            reverse('salty', kwargs={'pk': recipe.category.id}))
+            reverse('category', args=(recipe.id,)))
         content = response.content.decode('utf-8')
-        print(content)
-        self.assertIn('recipe title test', content) """
+        self.assertIn('RECIPE TITLE', content)
+
+    def test_category_view_template_do_not_loads_recipes(self):
+        recipe = self.make_recipe()
+        response = self.client.get(
+            reverse('category', args=(recipe.category_id + 1000,)))
+        content = response.content.decode('utf-8')
+        self.assertIn('Nenhuma receita encontrada', content)
+
+    def test_category_view_template_do_not_loads_is_published_false(self):
+        recipe = self.make_recipe(is_published=False)
+        response = self.client.get(
+            reverse('category', args=(recipe.category_id,)))
+        content = response.content.decode('utf-8')
+        self.assertIn('Nenhuma receita encontrada', content)
+
+    def test_detail_view_template_load_recipes(self):
+        recipe = self.make_recipe()
+        response = self.client.get(
+            reverse('detail', args=(recipe.id,)))
+        content = response.content.decode('utf-8')
+        self.assertIn('Recipe Title', content)
+
+    def test_detail_view_template_do_not_load_recipes(self):
+        recipe = self.make_recipe()
+        response = self.client.get(
+            reverse('detail', args=(recipe.id+1000,)))
+        status_code = response.status_code
+        self.assertEqual(status_code, 404)

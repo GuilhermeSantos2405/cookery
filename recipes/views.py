@@ -1,4 +1,3 @@
-from unicodedata import category
 
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.urls import reverse_lazy
@@ -26,7 +25,8 @@ class CategoryTemplateView(ListViewBase):
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
-        qs = qs.filter(category__id=self.kwargs.get('category_id'))
+        qs = qs.filter(category__id=self.kwargs.get(
+            'category_id'), is_published=True)
         return qs
 
 
@@ -34,6 +34,11 @@ class RecipeDetailView(DetailView):
     template_name = 'pages/recipe_detail.html'
     login_url = reverse_lazy('login')
     model = Recipe
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(is_published=True)
+        return qs
 
 
 class RecipeCreateView(LRM, CreateView):

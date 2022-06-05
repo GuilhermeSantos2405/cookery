@@ -7,5 +7,5 @@ class RecipeRegisterView(forms.ModelForm):
 
     class Meta:
         model = Recipe
-        fields = ['title', 'preparation_time', 'servings', 'ingredients',
-                  'method_preparation', 'image', 'category']
+        fields = ['title', 'preparation_time', 'servings',
+                  'ingredients', 'method_preparation', 'image', 'category']
