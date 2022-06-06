@@ -1,4 +1,3 @@
-
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, ListView, UpdateView
 from django.views.generic.edit import CreateView
@@ -10,7 +9,7 @@ from .forms import Registerform
 class AuthorsCreateView(CreateView):
     template_name = 'authors/templates/create_authors.html'
     form_class = Registerform
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('login')
 
 
 class AuthorRecipesView(ListView):

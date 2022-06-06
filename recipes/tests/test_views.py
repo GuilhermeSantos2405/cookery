@@ -1,6 +1,5 @@
 
 from django.urls import reverse
-from parameterized import parameterized
 
 from .test_testbase import TestBase
 

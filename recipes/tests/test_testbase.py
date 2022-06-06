@@ -2,11 +2,7 @@ from django.test import TestCase
 from recipes.models import Category, Recipe, User
 
 
-class TestBase(TestCase):
-
-    def setUp(self) -> None:
-        return super().setUp()
-
+class RecipeMixin:
     def make_category(self, name='Category'):
         return Category.objects.create(name=name)
 
@@ -53,3 +49,20 @@ class TestBase(TestCase):
             method_preparation=method_preparation,
             is_published=is_published,
         )
+
+    def make_recipe_in_batch(self, qtd=10):
+        recipes = []
+        for i in range(qtd):
+            kwargs = {
+                'title': f'Recipe Title {i}',
+                'author_data': {'username': f'u{i}'}
+            }
+            recipe = self.make_recipe(**kwargs)
+            recipes.append(recipe)
+        return recipes
+
+
+class TestBase(TestCase, RecipeMixin):
+
+    def setUp(self) -> None:
+        return super().setUp()
